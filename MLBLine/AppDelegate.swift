@@ -14,14 +14,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var controller = MasterViewController()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        let navigationController = self.window!.rootViewController as UINavigationController
-        let controller = navigationController.topViewController as MasterViewController
-        controller.managedObjectContext = self.managedObjectContext
+        let tabBarController = self.window!.rootViewController as! UITabBarController
+          let navigationController = tabBarController.viewControllers?[0] as! UINavigationController
+         self.controller = navigationController.topViewController as! MasterViewController
+        let configController = tabBarController.viewControllers?[1]as! ConfigViewController
+        self.controller.managedObjectContext = self.managedObjectContext
+        configController.managedObjectContext = self.managedObjectContext
         return true
     }
+    
+    func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]!) -> Void)!) {
+        NSLog("in handle code")
+        let request = userInfo as? NSDictionary
+        
+            let content = request?.objectForKey("content") as! String
+                
+                if content == "getdata" {
+                     let url = NSURL(string: "https://erikberg.com/mlb/standings.json")
+                    let request = NSMutableURLRequest(URL: url!)
+                    let bundle = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+                    var userAgent = "MLBLine/\(bundle)(cepwin@gmail.com)"
+                    request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+                    var loadTeams = false
+                    if controller.teams.count == 0 {
+                        loadTeams = true
+                    }
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+                        if(error == nil) {
+                            println(NSString(data: data, encoding: NSUTF8StringEncoding))
+                            var error:NSError? = nil
+                            
+                            self.controller.parsedObject = NSJSONSerialization.JSONObjectWithData(data, options:   NSJSONReadingOptions.AllowFragments, error:&error) as! NSDictionary
+                            if(error == nil) {
+                                let res1 = self.controller.parsedObject.mutableArrayValueForKey("standing")
+                                self.controller.loadDataIntoObjs(res1)
+                                //            self.transData = ["myData":self.teamDictSM]
+                                reply(["content":self.controller.teamDictSM])                            }
+                        }
+                        else {
+                            reply(["content":["error!":"error"]])
+                        }
+                    }
+            
+                }
+                else {
+                    reply(["success":"yes"])
+        }
+    }
+ 
+
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -52,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.cepwin.MLBLine" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
