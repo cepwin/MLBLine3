@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var controller = MasterViewController()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        let tabBarController = self.window!.rootViewController as! UITabBarController
+        let tabBarController = self.window!.rootViewController as! TabBarController
           let navigationController = tabBarController.viewControllers?[0] as! UINavigationController
          self.controller = navigationController.topViewController as! MasterViewController
         let configController = tabBarController.viewControllers?[1]as! ConfigViewController
@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]!) -> Void)!) {
         NSLog("in handle code")
+        let tabBarController = self.window!.rootViewController as! TabBarController
+
         let request = userInfo as? NSDictionary
         
             let content = request?.objectForKey("content") as! String
@@ -39,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     var userAgent = "MLBLine/\(bundle)(cepwin@gmail.com)"
                     request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
                     var loadTeams = false
-                    if controller.teams.count == 0 {
+                    if tabBarController.teams.count == 0 {
                         loadTeams = true
                     }
                     NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
