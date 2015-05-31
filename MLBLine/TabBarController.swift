@@ -16,7 +16,7 @@ class TabBarController: UITabBarController {
     var teamsSM : [String] = []
     var teamIdsSM : [String] = []
     
-    
+    var teamAll : [String:String] = [String:String]()
     
    
 }

@@ -24,13 +24,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     var managedObjectContext: NSManagedObjectContext? = nil
     
-   /* var teams : [String] = []
-    var teamIds : [String] = []
-    
-    var teamsSM : [String] = []
-    var teamIdsSM : [String] = [] */
-    
-    var teamList : [String] = ["new-york-mets", "new-york-yankees","washington-nationals"]
 
     var parsedObject  : NSDictionary = NSDictionary()
     var defaults : NSUserDefaults = NSUserDefaults()
@@ -45,8 +38,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func getData() {
         let tabObj = self.tabBarController as! TabBarController
-
-        let url = NSURL(string: "https://erikberg.com/mlb/standings.json")
+        
+        let alert = UIAlertView()
+        alert.title = "No Network Connectivity"
+        alert.message = "Can not download data"
+        alert.addButtonWithTitle("OK")
+     
+         let url = NSURL(string: "https://erikberg.com/mlb/standings.json")
         let request = NSMutableURLRequest(URL: url!)
         let bundle = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
         var userAgent = "MLBLine/\(bundle)(cepwin@gmail.com)"
@@ -63,11 +61,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             if(error == nil) {
                 let res1 = self.parsedObject.mutableArrayValueForKey("standing")
                 self.loadDataIntoObjs(res1)
-            //            self.transData = ["myData":self.teamDict2]
                 self.teamsTable.reloadData()
                  }
             }
             else {
+                   alert.show()
                 
             }
         }
@@ -77,6 +75,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func getDataSync() {
         let tabObj = self.tabBarController as! TabBarController
+        let alert = UIAlertView()
+        alert.title = "No Network Connectivity"
+        alert.message = "Can not download data"
+        alert.addButtonWithTitle("OK")
 
         let url = NSURL(string: "https://erikberg.com/mlb/standings.json")
         let request = NSMutableURLRequest(URL: url!)
@@ -94,6 +96,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if error != nil
         {
             // You can handle error response here
+            alert.show()
         }
         else
 {
@@ -115,8 +118,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func loadDataIntoObjs(res1:NSMutableArray) {
         let tabObj = self.tabBarController as! TabBarController
-        tabObj.teamIdsSM = []
-        tabObj.teamsSM = []
         for i in 0...(res1.count-1) {
             var teamData1 = MLBTeamObject()
             let resfst:NSDictionary = res1[i] as! NSDictionary
@@ -159,12 +160,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             indu.updateValue(resfst.valueForKey("points_scored_per_game")! , forKey: "points_scored_per_game")
             indu.updateValue(resfst.valueForKey("point_differential")! , forKey: "point_differential")
             indu.updateValue(resfst.valueForKey("point_differential_per_game")! , forKey: "point_differential_per_game")
-          //  indu.updateValue(resfst.valueForKey("streak_type")! , forKey: "streak_type")
-          //  indu.updateValue(resfst.valueForKey("streak_total")! , forKey: "streak_total")
             indu.updateValue(resfst.valueForKey("points_scored_per_game")! , forKey: "points_scored_per_game")
-            if(contains(self.teamList,resfst.valueForKey("team_id") as! String)) {
-                tabObj.teamIdsSM.append(resfst.valueForKey("team_id") as! String)
-                tabObj.teamsSM.append("\(first_name) \(last_name)")
+            if(contains(tabObj.teamIdsSM,resfst.valueForKey("team_id") as! String)) {
                 var induSM:[String:AnyObject] = [String:AnyObject]()
                 induSM.updateValue(wonloss, forKey: "won-loss")
                 induSM.updateValue(resfst.valueForKey("streak")! , forKey: "streak")
@@ -215,11 +212,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Do any additional setup after loading the view, typically from a nib.
       //  self.navigationItem.leftBarButtonItem = self.editButtonItem()
         let tabObj = self.tabBarController as! TabBarController
-
+        //tabObj.teamAll
         self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
          var teamIds1 : AnyObject? = self.defaults.objectForKey("teamIds")
          var teams1 : AnyObject? = self.defaults.objectForKey("teamNames")
-        
+        var teamsSM : AnyObject? = self.defaults.objectForKey("teamsSM")
+        var teamIdsSM : AnyObject? = self.defaults.objectForKey("teamIdsSM")
       if (teams1 != nil) {
             tabObj.teams = teams1 as! [String]
           //  self.teams.sort($0 > $1)
@@ -232,37 +230,27 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             tabObj.teamIds = sorted(tabObj.teamIds, <)
 
         }
+        if(teamIdsSM   != nil) {
+            tabObj.teamIdsSM = teamIdsSM as! [String]
+            //self.teamIds.sort($0 > $1)
+            tabObj.teamIdsSM = sorted(tabObj.teamIdsSM, <)
+            
+        }
+        if(teamsSM   != nil) {
+            tabObj.teamsSM = teamsSM as! [String]
+            //self.teamIds.sort($0 > $1)
+            tabObj.teamsSM = sorted(tabObj.teamsSM, <)
+            
+        }
 
         getData()
-      //   let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-     //   self.navigationItem.rightBarButtonItem = addButton
-    }
+      }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-  /*
-    func insertNewObject(sender: AnyObject) {
-        let context = self.fetchedResultsController.managedObjectContext
-        let entity = self.fetchedResultsController.fetchRequest.entity!
-        let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context) as NSManagedObject
-             
-        // If appropriate, configure the new managed object.
-        // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-        newManagedObject.setValue(NSDate(), forKey: "timeStamp")
-             
-        // Save the context.
-        var error: NSError? = nil
-        if !context.save(&error) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            //println("Unresolved error \(error), \(error.userInfo)")
-            abort()
-        }
-    }
-*/
 
     // MARK: - Segues
 
@@ -298,6 +286,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let tabObj = self.tabBarController as! TabBarController
+        
         cell.textLabel!.text = tabObj.teams[indexPath.item] as NSString as String
         
     }

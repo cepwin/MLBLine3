@@ -16,6 +16,7 @@
 		A24C644E1AE9C93D0022FE3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A24C644D1AE9C93D0022FE3A /* Images.xcassets */; };
 		A24C64511AE9C93D0022FE3A /* MLBLine WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A24C64391AE9C93D0022FE3A /* MLBLine WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A267A2C91AEC49C7003458B6 /* TeamsRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A267A2C81AEC49C7003458B6 /* TeamsRowController.swift */; };
+		A277C55B1B0B3ED50028F7FE /* ConfigTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A277C55A1B0B3ED50028F7FE /* ConfigTableViewCell.swift */; };
 		A286DA961AFDB45000E1E23E /* TeamDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A286DA951AFDB45000E1E23E /* TeamDetailController.swift */; };
 		A2ABCDE81ADAD26B00A3D666 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ABCDE71ADAD26B00A3D666 /* AppDelegate.swift */; };
 		A2ABCDEB1ADAD26B00A3D666 /* MLBLine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2ABCDE91ADAD26B00A3D666 /* MLBLine.xcdatamodeld */; };
@@ -80,6 +81,7 @@
 		A24C644B1AE9C93D0022FE3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		A24C644D1AE9C93D0022FE3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A267A2C81AEC49C7003458B6 /* TeamsRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamsRowController.swift; sourceTree = "<group>"; };
+		A277C55A1B0B3ED50028F7FE /* ConfigTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTableViewCell.swift; sourceTree = "<group>"; };
 		A286DA951AFDB45000E1E23E /* TeamDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDetailController.swift; sourceTree = "<group>"; };
 		A2ABCDE21ADAD26B00A3D666 /* MLBLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MLBLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2ABCDE61ADAD26B00A3D666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				A2ABCDEE1ADAD26D00A3D666 /* DetailViewController.swift */,
 				A2EDB99E1AE2FCD200C5AC50 /* ConfigViewController.swift */,
 				A2EDB99C1AE2F55600C5AC50 /* TabBarController.swift */,
+				A277C55A1B0B3ED50028F7FE /* ConfigTableViewCell.swift */,
 				A2ABCDF01ADAD26D00A3D666 /* Main.storyboard */,
 				A24C64331AE871B30022FE3A /* MLBTeamObject.swift */,
 				A2ABCDF31ADAD26D00A3D666 /* Images.xcassets */,
@@ -308,7 +311,7 @@
 		A2ABCDDA1ADAD26A00A3D666 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Wendy Sarrett";
 				TargetAttributes = {
 					A24C64381AE9C93D0022FE3A = {
@@ -418,6 +421,7 @@
 				A2EDB99F1AE2FCD200C5AC50 /* ConfigViewController.swift in Sources */,
 				A24C64341AE871B30022FE3A /* MLBTeamObject.swift in Sources */,
 				A2EDB99D1AE2F55700C5AC50 /* TabBarController.swift in Sources */,
+				A277C55B1B0B3ED50028F7FE /* ConfigTableViewCell.swift in Sources */,
 				A2ABCDED1ADAD26D00A3D666 /* MasterViewController.swift in Sources */,
 				A2ABCDEF1ADAD26D00A3D666 /* DetailViewController.swift in Sources */,
 			);
@@ -493,7 +497,7 @@
 				INFOPLIST_FILE = "MLBLine WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos8.3;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -510,7 +514,7 @@
 				INFOPLIST_FILE = "MLBLine WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos8.3;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -592,7 +596,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos8.3;
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -627,7 +631,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos8.3;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

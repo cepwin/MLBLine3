@@ -24,8 +24,7 @@ class InterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         // Configure interface objects here.
-        
-        self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
+           self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
         
         
         var dictionary = NSDictionary(objects: ["getdata"], forKeys: ["content"])
@@ -50,18 +49,20 @@ class InterfaceController: WKInterfaceController {
                                 self.teams.append("\(first_name) \(last_name)")
                                 self.teamIdsSM.append(id as String)
 
+                            }
                         }
-                    }
                     
-                }
+                    } else {
+                        //handle error here
+                    }
                 
-            }
+                }
             }
             if(self.teamsData.count > 0) {
                 self.loadTeams()
             }
             } else {
-                
+               
             }
         })
 
