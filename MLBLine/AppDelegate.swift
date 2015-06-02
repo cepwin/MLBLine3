@@ -45,6 +45,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         loadTeams = true
                     }
                     NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+                        let httpResponse = response as! NSHTTPURLResponse
+                        if(httpResponse.statusCode == 429) {
+                            let dictionary:NSDictionary = httpResponse.allHeaderFields
+                            let times = dictionary.valueForKey("xmlstats-api-remaining")!.integerValue as NSInteger
+                            if(times == 0) {
+                                let date = NSDate().timeIntervalSince1970 as NSTimeInterval
+                                let xmlReset:NSString? = dictionary.valueForKey("xmlstats-api-reset") as? NSString
+                                if(xmlReset != nil) {
+                                    let  distance = date.distanceTo((xmlReset)!.doubleValue) as Double
+                                    NSLog("waiting \(distance) seconds to retry")
+                                    reply(["content":["error!":"error"]])
+                                    
+                                }
+                            }
+                        }
                         if(error == nil) {
                             println(NSString(data: data, encoding: NSUTF8StringEncoding))
                             var error:NSError? = nil

@@ -53,6 +53,21 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             loadTeams = true
         }
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            let httpResponse = response as! NSHTTPURLResponse
+            if(httpResponse.statusCode == 429) {
+                let dictionary:NSDictionary = httpResponse.allHeaderFields
+                let times = dictionary.valueForKey("xmlstats-api-remaining")!.integerValue as NSInteger
+                if(times == 0) {
+                    alert.title = "Wait for connection"
+                    let date = NSDate().timeIntervalSince1970 as NSTimeInterval
+                    let xmlReset:NSString? = dictionary.valueForKey("xmlstats-api-reset") as? NSString
+                    if(xmlReset != nil) {
+                        let  distance = date.distanceTo((xmlReset)!.doubleValue) as Double
+                        alert.message = "waiting \(distance) seconds to retry"
+                    
+                    }
+                }
+            }
             if(error == nil) {
             println(NSString(data: data, encoding: NSUTF8StringEncoding))
             var error:NSError? = nil
@@ -165,8 +180,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 var induSM:[String:AnyObject] = [String:AnyObject]()
                 induSM.updateValue(wonloss, forKey: "won-loss")
                 induSM.updateValue(resfst.valueForKey("streak")! , forKey: "streak")
-                induSM.updateValue(resfst.valueForKey("win_percentage")! , forKey: "win_percentage")
-                induSM.updateValue(resfst.valueForKey("last_five")! , forKey: "last_five")
+                induSM.updateValue(resfst.valueForKey("win_percentage")! , forKey: "win_%")
+                induSM.updateValue(resfst.valueForKey("last_five")! , forKey: "last_5")
 
                 self.teamDictSM.updateValue(induSM as Dictionary, forKey: resfst.valueForKey("team_id") as! String)
 

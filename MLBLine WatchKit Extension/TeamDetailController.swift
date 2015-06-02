@@ -30,7 +30,9 @@ class TeamDetailController: WKInterfaceController {
             let x = self.teamDetailTable.numberOfRows
             let row = self.teamDetailTable.rowControllerAtIndex(index) as? TeamDetailRowController
             let stVal = team.1 as! String
-            row!.detailRowLabel.setText(team.0 + stVal)
+            var stName = team.0 as String
+            stName = stName.stringByReplacingOccurrencesOfString("_", withString: " ", options: NSStringCompareOptions.CaseInsensitiveSearch)
+            row!.detailRowLabel.setText("\(stName): \(stVal)")
 
         }
         
