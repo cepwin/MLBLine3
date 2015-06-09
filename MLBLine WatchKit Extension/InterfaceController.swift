@@ -12,6 +12,7 @@ import Foundation
 
 class InterfaceController: WKInterfaceController {
 
+
    var teams : [String] = []
     var teamIdsSM : [String] = []
   
@@ -19,10 +20,25 @@ class InterfaceController: WKInterfaceController {
     
     var teamsData = [String:[String:AnyObject]]()
 
+    @IBOutlet weak var msgButton: WKInterfaceButton!
+    
     @IBOutlet weak var teamRowTable: WKInterfaceTable!
+    
+    @IBAction func close() {
+        self.msgButton.setHidden(true)
+    }
+
+    
+    @IBAction func update() {
+        doUpdate()
+    }
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
+        doUpdate()
+    }
+        
+    func doUpdate() {
         // Configure interface objects here.
            self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
         
@@ -54,15 +70,21 @@ class InterfaceController: WKInterfaceController {
                     
                     } else {
                         //handle error here
+                        self.msgButton.setTitle("Data load failed")
+                        self.msgButton.setHidden(false)
                     }
                 
                 }
             }
             if(self.teamsData.count > 0) {
                 self.loadTeams()
+                self.msgButton.setTitle("Data Loaded")
+                self.msgButton.setHidden(false)
+
             }
             } else {
-               
+                self.msgButton.setTitle("No Data")
+                self.msgButton.setHidden(false)
             }
         })
 

@@ -67,8 +67,8 @@ class ConfigViewController: UIViewController,ConfigTableViewCellDelegate {
     }
     
     @IBAction func SaveConfig(sender: AnyObject) {
-        self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
         let tabObj = self.tabBarController as! TabBarController
+         self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
         self.defaults.setObject(tabObj.teamIdsSM, forKey: "teamIdsSM")
         
         self.defaults.synchronize()
@@ -77,6 +77,14 @@ class ConfigViewController: UIViewController,ConfigTableViewCellDelegate {
         self.defaults.setObject(tabObj.teamsSM, forKey: "teamsSM")
         
         self.defaults.synchronize()
+        tabObj.tableview?.teamsTable.reloadData()
+        //self.tableView.reloadData()
+        let alert = UIAlertView()
+        alert.title = "Save"
+        alert.message = "Favorites Saved"
+        alert.addButtonWithTitle("OK")
+        alert.show()
+ 
         
         
 

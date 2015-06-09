@@ -19,7 +19,6 @@
 		A277C55B1B0B3ED50028F7FE /* ConfigTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A277C55A1B0B3ED50028F7FE /* ConfigTableViewCell.swift */; };
 		A286DA961AFDB45000E1E23E /* TeamDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A286DA951AFDB45000E1E23E /* TeamDetailController.swift */; };
 		A2ABCDE81ADAD26B00A3D666 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ABCDE71ADAD26B00A3D666 /* AppDelegate.swift */; };
-		A2ABCDEB1ADAD26B00A3D666 /* MLBLine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2ABCDE91ADAD26B00A3D666 /* MLBLine.xcdatamodeld */; };
 		A2ABCDED1ADAD26D00A3D666 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ABCDEC1ADAD26C00A3D666 /* MasterViewController.swift */; };
 		A2ABCDEF1ADAD26D00A3D666 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ABCDEE1ADAD26D00A3D666 /* DetailViewController.swift */; };
 		A2ABCDF21ADAD26D00A3D666 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2ABCDF01ADAD26D00A3D666 /* Main.storyboard */; };
@@ -86,7 +85,6 @@
 		A2ABCDE21ADAD26B00A3D666 /* MLBLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MLBLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2ABCDE61ADAD26B00A3D666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2ABCDE71ADAD26B00A3D666 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A2ABCDEA1ADAD26B00A3D666 /* MLBLine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MLBLine.xcdatamodel; sourceTree = "<group>"; };
 		A2ABCDEC1ADAD26C00A3D666 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		A2ABCDEE1ADAD26D00A3D666 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		A2ABCDF11ADAD26D00A3D666 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -201,7 +199,6 @@
 				A24C64331AE871B30022FE3A /* MLBTeamObject.swift */,
 				A2ABCDF31ADAD26D00A3D666 /* Images.xcassets */,
 				A2ABCDF51ADAD26D00A3D666 /* LaunchScreen.xib */,
-				A2ABCDE91ADAD26B00A3D666 /* MLBLine.xcdatamodeld */,
 				A2ABCDE51ADAD26B00A3D666 /* Supporting Files */,
 			);
 			path = MLBLine;
@@ -418,7 +415,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2ABCDE81ADAD26B00A3D666 /* AppDelegate.swift in Sources */,
-				A2ABCDEB1ADAD26B00A3D666 /* MLBLine.xcdatamodeld in Sources */,
 				A2EDB99F1AE2FCD200C5AC50 /* ConfigViewController.swift in Sources */,
 				A24C64341AE871B30022FE3A /* MLBTeamObject.swift in Sources */,
 				A2EDB99D1AE2F55700C5AC50 /* TabBarController.swift in Sources */,
@@ -754,19 +750,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		A2ABCDE91ADAD26B00A3D666 /* MLBLine.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A2ABCDEA1ADAD26B00A3D666 /* MLBLine.xcdatamodel */,
-			);
-			currentVersion = A2ABCDEA1ADAD26B00A3D666 /* MLBLine.xcdatamodel */;
-			path = MLBLine.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A2ABCDDA1ADAD26A00A3D666 /* Project object */;
 }

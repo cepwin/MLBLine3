@@ -18,5 +18,7 @@ class TabBarController: UITabBarController {
     
     var teamAll : [String:String] = [String:String]()
     
+    var tableview : MasterViewController? = nil
+    
    
 }
