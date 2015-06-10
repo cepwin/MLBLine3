@@ -19,6 +19,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     var teamDictionary = [String : MLBTeamObject]()
     
+    var teamIds:[String] = [String]()
+    var teams:[String] = [String]()
+    
+    var teamIdsSM:[String] = [String]()
+    var teamsSM:[String] = [String]()
+
+    
+    
     
     @IBOutlet var teamsTable: UITableView!
     
@@ -225,6 +233,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        sortTeams()
     }
 
     override func viewDidLoad() {
@@ -242,39 +251,54 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             tabObj.teams = teams1 as! [String]
           //  self.teams.sort($0 > $1)
             tabObj.teams = sorted(tabObj.teams, <)
+            self.teams = tabObj.teams
+        
          }
         
         if(teamIds1   != nil) {
             tabObj.teamIds = teamIds1 as! [String]
            //self.teamIds.sort($0 > $1)
             tabObj.teamIds = sorted(tabObj.teamIds, <)
-
+           // self.teamIds = tabObj.teamIds
         }
         if(teamIdsSM   != nil) {
             tabObj.teamIdsSM = teamIdsSM as! [String]
             //self.teamIds.sort($0 > $1)
             tabObj.teamIdsSM = sorted(tabObj.teamIdsSM, <)
+           // self.teamIdsSM = tabObj.teamIdsSM
             
         }
         if(teamsSM   != nil) {
             tabObj.teamsSM = teamsSM as! [String]
             //self.teamIds.sort($0 > $1)
             tabObj.teamsSM = sorted(tabObj.teamsSM, <)
+           // self.teamsSM = tabObj.teamsSM
             
         }
         //change here
-        if tabObj.teamIdsSM.count > 0 {
-            for k in 0...(tabObj.teamIdsSM.count-1){
-                tabObj.teamIds = tabObj.teamIds.filter{!contains([tabObj.teamIdsSM[k]], $0)}
-                tabObj.teamIds.insert(tabObj.teamIdsSM[k], atIndex: k)
-            
-                tabObj.teams.filter{!contains([tabObj.teamsSM[k]], $0)}
-                tabObj.teams.insert(tabObj.teamsSM[k], atIndex: k)
- 
+        sortTeams()
+          getData()
+      }
+    
+    func sortTeams() {
+        let tabObj = self.tabBarController as! TabBarController
+        self.teamsSM = tabObj.teamsSM
+        self.teams = tabObj.teams
+        self.teamIdsSM = tabObj.teamIdsSM
+        self.teamIds = tabObj.teamIds
+
+        if self.teamIdsSM.count > 0 {
+            for k in 0...(self.teamIdsSM.count-1){
+                self.teamIds = self.teamIds.filter{!contains([self.teamIdsSM[k]], $0)}
+                self.teamIds.insert(self.teamIdsSM[k], atIndex: k)
+                
+                self.teams.filter{!contains([self.teamsSM[k]], $0)}
+                self.teams.insert(self.teamsSM[k], atIndex: k)
+                
             }
         }
-        getData()
-      }
+  
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -289,7 +313,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let key = tabObj.teamIds[indexPath.item] as String
+                let key = self.teamIds[indexPath.item] as String
                 let object:[String:AnyObject] = self.teamDict2[key]!
                 var keys:Array<String>  = Array(object.keys) as Array<String>
               (segue.destinationViewController as! DetailViewController).detailItem = object
@@ -315,9 +339,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let tabObj = self.tabBarController as! TabBarController
+        //let tabObj = self.tabBarController as! TabBarController
         
-        cell.textLabel!.text = tabObj.teams[indexPath.item] as NSString as String
+        cell.textLabel!.text = self.teams[indexPath.item] as NSString as String
         
     }
 

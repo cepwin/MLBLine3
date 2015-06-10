@@ -77,6 +77,7 @@ class ConfigViewController: UIViewController,ConfigTableViewCellDelegate {
         self.defaults.setObject(tabObj.teamsSM, forKey: "teamsSM")
         
         self.defaults.synchronize()
+        tabObj.tableview?.sortTeams()
         tabObj.tableview?.teamsTable.reloadData()
         //self.tableView.reloadData()
         let alert = UIAlertView()
