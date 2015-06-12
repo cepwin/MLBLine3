@@ -68,6 +68,14 @@ class ConfigViewController: UIViewController,ConfigTableViewCellDelegate {
     
     @IBAction func SaveConfig(sender: AnyObject) {
         let tabObj = self.tabBarController as! TabBarController
+        if tabObj.teamIdsSM.count > 3 {
+            let alert = UIAlertView()
+            alert.title = "Favorites"
+            alert.message = "Only 3 favorite teams can be selected"
+            alert.addButtonWithTitle("OK")
+            alert.show()
+
+        } else {
          self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
         self.defaults.setObject(tabObj.teamIdsSM, forKey: "teamIdsSM")
         
@@ -77,15 +85,15 @@ class ConfigViewController: UIViewController,ConfigTableViewCellDelegate {
         self.defaults.setObject(tabObj.teamsSM, forKey: "teamsSM")
         
         self.defaults.synchronize()
-        tabObj.tableview?.sortTeams()
-        tabObj.tableview?.teamsTable.reloadData()
-        //self.tableView.reloadData()
-        let alert = UIAlertView()
-        alert.title = "Save"
-        alert.message = "Favorites Saved"
-        alert.addButtonWithTitle("OK")
-        alert.show()
- 
+            tabObj.tableview?.sortTeams()
+            tabObj.tableview?.teamsTable.reloadData()
+            //self.tableView.reloadData()
+            let alert = UIAlertView()
+            alert.title = "Save"
+            alert.message = "Favorites Saved"
+            alert.addButtonWithTitle("OK")
+            alert.show()
+        }
         
         
 

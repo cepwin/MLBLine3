@@ -8,7 +8,7 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="MLBLine_WatchKit_App" customModuleProvider="target">
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="MLBLine_WatchKit_Extension">
                     <items>
                         <button width="1" alignment="left" title="Update" id="UXR-3y-gcF">
                             <connections>
@@ -16,6 +16,7 @@
                             </connections>
                         </button>
                         <button width="1" alignment="left" hidden="YES" title="MsgButton" id="aah-2x-ZWA">
+                            <color key="titleColor" red="0.71599433059999995" green="0.80043936230000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="close" destination="AgC-eL-Hgc" id="Kte-t2-HoD"/>
                             </connections>

@@ -12,6 +12,7 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     var window: UIWindow?
 
     var controller = MasterViewController()
@@ -24,10 +25,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          return true
     }
     
-    func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]!) -> Void)!) {
+    
+    func registerBackgroundTask() {
+        backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+            [unowned self] in
+            self.endBackgroundTask()
+        }
+        assert(backgroundTask != UIBackgroundTaskInvalid)
+    }
+    
+    func endBackgroundTask() {
+        UIApplication.sharedApplication().endBackgroundTask(backgroundTask)
+        backgroundTask = UIBackgroundTaskInvalid
+    }
+    
+    func application(application: UIApplication,
+        handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]!) -> Void)!) {
+        registerBackgroundTask()
         NSLog("in handle code")
         let tabBarController = self.window!.rootViewController as! TabBarController
-
+  
         let request = userInfo as? NSDictionary
         
             let content = request?.objectForKey("content") as! String
@@ -54,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     let  distance = date.distanceTo((xmlReset)!.doubleValue) as Double
                                     NSLog("waiting \(distance) seconds to retry")
                                     reply(["content":["error!":"error"]])
+                                    self.endBackgroundTask()
+
                                     
                                 }
                             }
@@ -67,17 +86,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 let res1 = self.controller.parsedObject.mutableArrayValueForKey("standing")
                                 self.controller.loadDataIntoObjs(res1)
                                 //            self.transData = ["myData":self.teamDictSM]
-                                reply(["content":self.controller.teamDictSM])                            }
+                                reply(["content":self.controller.teamDictSM])
+                                self.endBackgroundTask()
+
+                            }
                         }
                         else {
                             reply(["content":["error!":"error"]])
+                            self.endBackgroundTask()
+
                         }
                     }
             
                 }
                 else {
                     reply(["success":"yes"])
+                    endBackgroundTask()
+
         }
+            
     }
  
 
