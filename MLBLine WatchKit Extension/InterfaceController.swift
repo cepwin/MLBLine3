@@ -13,24 +13,29 @@ import Foundation
 class InterfaceController: WKInterfaceController {
 
 
-   var teams : [String] = []
+    @IBOutlet weak var userButton: WKInterfaceButton!
+    
+    var teams : [String] = []
     var teamIdsSM : [String] = []
   
     var defaults : NSUserDefaults = NSUserDefaults()
     
     var teamsData = [String:[String:AnyObject]]()
-
-    @IBOutlet weak var msgButton: WKInterfaceButton!
     
     @IBOutlet weak var teamRowTable: WKInterfaceTable!
     
-    @IBAction func close() {
-        self.msgButton.setHidden(true)
-    }
+    var errorState:Bool = false
 
     
     @IBAction func update() {
-        doUpdate()
+        if(self.errorState) {
+            userButton.setBackgroundColor(UIColor.blueColor())
+            userButton.setTitle("Update")
+            self.errorState = false
+        }
+        else {
+            doUpdate()
+        }
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -41,8 +46,8 @@ class InterfaceController: WKInterfaceController {
     func doUpdate() {
         // Configure interface objects here.
            self.defaults = NSUserDefaults(suiteName: "group.com.cepwin.mlbline")!
-        
-        
+        self.userButton.setBackgroundColor(UIColor.redColor())
+        self.userButton.setTitle("Updating")
         var dictionary = NSDictionary(objects: ["getdata"], forKeys: ["content"])
         WKInterfaceController.openParentApplication(dictionary as [NSObject : AnyObject], reply: { (replyInfo, error) -> Void in
             if(error == nil) {
@@ -70,21 +75,24 @@ class InterfaceController: WKInterfaceController {
                     
                     } else {
                         //handle error here
-                        self.msgButton.setTitle("Data load failed")
-                        self.msgButton.setHidden(false)
+                        self.userButton.setTitle("Data load failed")
+                        self.errorState = true
                     }
                 
                 }
             }
             if(self.teamsData.count > 0) {
                 self.loadTeams()
-                self.msgButton.setTitle("Data Loaded")
-                self.msgButton.setHidden(false)
-
+                self.userButton.setBackgroundColor(UIColor.blueColor())
+                self.userButton.setTitle("Update")
             }
             } else {
-                self.msgButton.setTitle("No Data")
-                self.msgButton.setHidden(false)
+                self.userButton.setTitle("No Data")
+                self.errorState = true
+            }
+            if(!self.errorState) {
+                self.userButton.setBackgroundColor(UIColor.blueColor())
+                self.userButton.setTitle("Update")
             }
         })
 
