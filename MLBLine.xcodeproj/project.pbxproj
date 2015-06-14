@@ -198,7 +198,6 @@
 				A2ABCDF01ADAD26D00A3D666 /* Main.storyboard */,
 				A24C64331AE871B30022FE3A /* MLBTeamObject.swift */,
 				A2ABCDF31ADAD26D00A3D666 /* Images.xcassets */,
-				A2ABCDF51ADAD26D00A3D666 /* LaunchScreen.xib */,
 				A2ABCDE51ADAD26B00A3D666 /* Supporting Files */,
 			);
 			path = MLBLine;
@@ -215,6 +214,7 @@
 		A2ABCDFF1ADAD26D00A3D666 /* MLBLineTests */ = {
 			isa = PBXGroup;
 			children = (
+				A2ABCDF51ADAD26D00A3D666 /* LaunchScreen.xib */,
 				A2ABCE021ADAD26D00A3D666 /* MLBLineTests.swift */,
 				A2ABCE001ADAD26D00A3D666 /* Supporting Files */,
 			);
@@ -478,6 +478,7 @@
 				A2ABCDF61ADAD26D00A3D666 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = ../MLBLine;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
